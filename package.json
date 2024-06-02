@@ -18,6 +18,9 @@
     "@formatjs/intl-locale": "^4.0.0",
     "@formatjs/intl-numberformat": "^8.10.3",
     "@formatjs/intl-pluralrules": "^5.2.14",
+    "@gluestack-style/react": "^1.0.56",
+    "@gluestack-ui/config": "^1.1.18",
+    "@gluestack-ui/themed": "^1.1.26",
     "@lingui/macro": "^4.11.1",
     "@lingui/react": "^4.11.1",
     "@react-navigation/native": "^6.1.17",
@@ -29,7 +32,8 @@
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-safe-area-context": "4.10.1",
-    "react-native-screens": "^3.31.1"
+    "react-native-screens": "^3.31.1",
+    "react-native-svg": "15.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
