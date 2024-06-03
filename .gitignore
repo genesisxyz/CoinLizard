@@ -36,3 +36,6 @@ yarn-error.*
 
 # Lingui
 /src/locales/**/*.ts
+
+# Environment
+.env*.local
