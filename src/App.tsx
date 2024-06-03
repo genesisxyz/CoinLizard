@@ -4,8 +4,9 @@ import { i18n } from '@lingui/core';
 import { I18nProvider, TransRenderProps } from '@lingui/react';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import HomeStack from './navigators/HomeStack';
+import RootNavigator from './navigators/RootNavigator';
 
 const queryClient = new QueryClient();
 
@@ -18,9 +19,11 @@ export default function App() {
     <I18nProvider i18n={i18n} defaultComponent={DefaultComponent}>
       <QueryClientProvider client={queryClient}>
         <GluestackUIProvider config={config}>
-          <NavigationContainer>
-            <HomeStack />
-          </NavigationContainer>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <NavigationContainer>
+              <RootNavigator />
+            </NavigationContainer>
+          </GestureHandlerRootView>
         </GluestackUIProvider>
       </QueryClientProvider>
     </I18nProvider>

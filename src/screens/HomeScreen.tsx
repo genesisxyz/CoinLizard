@@ -1,8 +1,8 @@
-import { Box } from '@gluestack-ui/themed';
+import { Box, Text } from '@gluestack-ui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { FlatList, FlatListProps, Text } from 'react-native';
+import { FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
 import { RootStackParamList } from '../routes';

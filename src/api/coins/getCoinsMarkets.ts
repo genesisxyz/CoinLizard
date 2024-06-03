@@ -49,7 +49,7 @@ export type GetCoinsMarketsPayload = {
   precision?: string;
 };
 
-export const getCoinsMarkets = async (payload: GetCoinsMarketsPayload) => {
+export const getCoinsMarkets = async (payload: GetCoinsMarketsPayload): Promise<CoinMarket[]> => {
   const response = await apiClient.get<CoinMarket[]>('/coins/markets', {
     params: payload,
   });

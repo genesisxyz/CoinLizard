@@ -7,11 +7,11 @@ import HomeScreen from '../screens/HomeScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export default function HomeStack() {
+export default function RootNavigator() {
   const { _ } = useLingui();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} options={{ title: _(msg`Home`) }} />
     </Stack.Navigator>
   );
