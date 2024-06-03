@@ -1,3 +1,5 @@
+import { config } from '@gluestack-ui/config';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,22 +23,12 @@ const queryClient = new QueryClient({
   },
 });
 
-jest.mock('../api/coins/getCoinsMarkets', () => ({
-  getCoinsMarkets: jest.fn().mockResolvedValue([
-    {
-      id: 1,
-      name: 'Bitcoin',
-    },
-    {
-      id: 2,
-      name: 'Ethereum',
-    },
-    {
-      id: 3,
-      name: 'Dogecoin',
-    },
-  ]),
-}));
+jest.mock('../api/coins/getCoinsMarkets', () => {
+  const coinMarket = require('../api/coins/fixtures/coinMarket.json');
+  return {
+    getCoinsMarkets: jest.fn().mockResolvedValue([coinMarket]),
+  };
+});
 
 const TestingProvider = ({ children }: any) => <I18nProvider i18n={i18n}>{children}</I18nProvider>;
 
@@ -47,16 +39,20 @@ test('RootNavigator renders coins list', async () => {
 
   render(
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
+      <GluestackUIProvider config={config}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </GluestackUIProvider>
     </QueryClientProvider>,
     {
       wrapper: TestingProvider,
     },
   );
 
-  expect(await screen.findByText('Bitcoin')).toBeOnTheScreen();
-  expect(await screen.findByText('Ethereum')).toBeOnTheScreen();
-  expect(await screen.findByText('Dogecoin')).toBeOnTheScreen();
+  expect(await screen.findByText('btc')).toBeOnTheScreen();
+  expect(await screen.findByText('1.4%')).toBeOnTheScreen();
+  expect(await screen.findByText('0.7%')).toBeOnTheScreen();
+  expect(await screen.findByText('$68,980.00')).toBeOnTheScreen();
+  expect(await screen.findByText('$1,360,405,926,441.00')).toBeOnTheScreen();
 });
