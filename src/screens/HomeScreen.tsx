@@ -1,6 +1,7 @@
-import { Box, HStack, Image, Text, VStack } from '@gluestack-ui/themed';
+import { Box, HStack, Image, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import { useLingui } from '@lingui/react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
@@ -60,6 +61,8 @@ function CoinCellItem(props: { item: CoinMarket }) {
 
   const { i18n } = useLingui();
 
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Detail'>>();
+
   const priceChangePercentage7Days = useMemo<number | null>(() => {
     if (!item.sparkline_in_7d) return null;
     const firstSparklineData = item.sparkline_in_7d.price[0];
@@ -68,44 +71,50 @@ function CoinCellItem(props: { item: CoinMarket }) {
     return ((lastSparklineData - firstSparklineData) / firstSparklineData) * 100;
   }, [item.sparkline_in_7d]);
 
+  const onPress = useCallback(() => {
+    navigation.navigate('Detail', { id: item.id });
+  }, [item.id, navigation]);
+
   return (
-    <Box flexDirection="row" padding="$2">
-      <HStack space="sm" alignItems="center">
-        <Text width="$4.5" fontSize={10}>
-          {item.market_cap_rank}
-        </Text>
-        <VStack width="$12" space="xs" alignItems="center">
-          <Image alt="coin image" source={{ uri: item.image }} width={32} height={32} />
-          <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
-            {item.symbol}
+    <Pressable onPress={onPress}>
+      <Box flexDirection="row" padding="$2">
+        <HStack space="sm" alignItems="center">
+          <Text width="$4.5" fontSize={10}>
+            {item.market_cap_rank}
           </Text>
-        </VStack>
-        <Text width="$20" fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-          {i18n.number(item.current_price, { currency: 'USD', style: 'currency' })}
-        </Text>
-        <VStack width="$12">
-          <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-            {i18n.number(item.price_change_percentage_24h, {
-              maximumFractionDigits: 1,
-              minimumFractionDigits: 1,
-            })}
-            %
+          <VStack width="$12" space="xs" alignItems="center">
+            <Image alt="coin image" source={{ uri: item.image }} width={32} height={32} />
+            <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
+              {item.symbol}
+            </Text>
+          </VStack>
+          <Text width="$20" fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+            {i18n.number(item.current_price, { currency: 'USD', style: 'currency' })}
           </Text>
-          {priceChangePercentage7Days !== null && (
+          <VStack width="$12">
             <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-              {i18n.number(priceChangePercentage7Days, {
+              {i18n.number(item.price_change_percentage_24h, {
                 maximumFractionDigits: 1,
                 minimumFractionDigits: 1,
               })}
               %
             </Text>
-          )}
-        </VStack>
-        <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-          {i18n.number(item.market_cap, { currency: 'USD', style: 'currency' })}
-        </Text>
-      </HStack>
-    </Box>
+            {priceChangePercentage7Days !== null && (
+              <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+                {i18n.number(priceChangePercentage7Days, {
+                  maximumFractionDigits: 1,
+                  minimumFractionDigits: 1,
+                })}
+                %
+              </Text>
+            )}
+          </VStack>
+          <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+            {i18n.number(item.market_cap, { currency: 'USD', style: 'currency' })}
+          </Text>
+        </HStack>
+      </Box>
+    </Pressable>
   );
 }
 
