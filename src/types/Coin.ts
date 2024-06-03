@@ -169,6 +169,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * total value locked
@@ -193,6 +194,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin all time high (ath) change in percentage
@@ -201,6 +203,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin all time high (ath) date
@@ -209,6 +212,7 @@ export type Coin = {
       btc: string;
       eur: string;
       usd: string;
+      gbp: number;
     };
     /**
      * coin all time low (atl) in currency
@@ -217,6 +221,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin all time low (atl) change in percentage
@@ -225,6 +230,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin all time low (atl) date
@@ -233,6 +239,7 @@ export type Coin = {
       btc: string;
       eur: string;
       usd: string;
+      gbp: number;
     };
     /**
      * coin market cap in currency
@@ -241,6 +248,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin rank by market cap
@@ -253,6 +261,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * market cap to fully diluted valuation ratio
@@ -265,6 +274,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h price high in currency
@@ -273,6 +283,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h price low in currency
@@ -281,6 +292,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h price change in currency
@@ -329,6 +341,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h price change in currency
@@ -337,6 +350,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 7d price change in currency
@@ -345,6 +359,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 14d price change in currency
@@ -353,6 +368,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 30d price change in currency
@@ -361,6 +377,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 60d price change in currency
@@ -369,6 +386,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 200d price change in currency
@@ -377,6 +395,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 1y price change in currency
@@ -385,6 +404,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h market cap change in currency
@@ -393,6 +413,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin 24h market cap change in percentage
@@ -401,6 +422,7 @@ export type Coin = {
       btc: number;
       eur: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin total supply
@@ -552,6 +574,7 @@ export type Coin = {
       btc: number;
       eth: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin ticker converted volume
@@ -560,6 +583,7 @@ export type Coin = {
       btc: number;
       eth: number;
       usd: number;
+      gbp: number;
     };
     /**
      * coin ticker trust score
