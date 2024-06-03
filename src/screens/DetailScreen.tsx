@@ -76,7 +76,7 @@ export default function DetailScreen(props: DetailScreenProps) {
           {currentPrice}
         </Text>
         <Text
-          color={data.market_data.price_change_percentage_24h > 0 ? '$green400' : 'red400'}
+          color={data.market_data.price_change_percentage_24h > 0 ? '$green400' : '$red400'}
           fontWeight="$bold">
           {priceChangePercentage24h}%
         </Text>
