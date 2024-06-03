@@ -109,7 +109,7 @@ export type CoinMarket = {
   /**
    * coin price sparkline in 7 days
    */
-  sparkline_in_7d: {
+  sparkline_in_7d?: {
     price: number[];
   };
 };
