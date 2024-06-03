@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { getCoin, GetCoinPayload } from '../api/coins/getCoin';
+import Chart from '../components/Chart';
 import { RootStackParamList } from '../routes';
 
 export type DetailScreenProps = NativeStackScreenProps<RootStackParamList, 'Detail'>;
@@ -80,7 +81,7 @@ export default function DetailScreen(props: DetailScreenProps) {
           {priceChangePercentage24h}%
         </Text>
       </HStack>
-
+      <Chart id={id} />
       <Box bg="$white" borderRadius="$lg">
         <MarketDataCell
           title={_(msg`Market cap rank`)}
