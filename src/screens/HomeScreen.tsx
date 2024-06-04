@@ -2,9 +2,9 @@ import { Box, HStack, Image, Pressable, Text, useToken, VStack } from '@gluestac
 import { useLingui } from '@lingui/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';
-import { FlatList, FlatListProps } from 'react-native';
+import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
 import { RootStackParamList } from '../routes';
@@ -15,7 +15,7 @@ export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 export default function HomeScreen(props: HomeScreenProps) {
   const { navigation } = props;
 
-  const { data } = useCoinsListWithMarketDataQuery();
+  const { data, fetchNextPage, isFetchingNextPage } = useCoinsListWithMarketDataQuery();
 
   useEffect(() => {
     navigation.setOptions({
@@ -62,16 +62,36 @@ export default function HomeScreen(props: HomeScreenProps) {
     return <CoinCellItem item={item} />;
   }, []);
 
+  const renderFooter = useCallback(() => {
+    if (!isFetchingNextPage) {
+      return null;
+    }
+
+    return (
+      <Box padding="$2" justifyContent="center" alignItems="center">
+        <ActivityIndicator />
+      </Box>
+    );
+  }, [isFetchingNextPage]);
+
   const space2 = useToken('space', '2');
+
+  const dataFlat = useMemo(() => {
+    return data?.pages.map((page) => page).flat();
+  }, [data]);
 
   return (
     <FlatList
       contentContainerStyle={{ padding: space2 }}
       ListHeaderComponent={renderHeader}
       contentInsetAdjustmentBehavior="automatic"
-      data={data}
+      data={dataFlat}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
+      ListFooterComponent={renderFooter}
+      onEndReached={() => {
+        fetchNextPage();
+      }}
     />
   );
 }
@@ -137,17 +157,20 @@ function CoinCellItem(props: { item: CoinMarket }) {
 }
 
 export const useCoinsListWithMarketDataQuery = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['coins', 'markets'],
-    queryFn: async () => {
+    queryFn: async ({ pageParam }) => {
       const response = await getCoinsMarkets({
         vs_currency: 'usd',
         order: 'market_cap_desc',
         per_page: 10,
-        page: 1,
+        page: pageParam,
         sparkline: true,
       });
       return response;
     },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages, lastPageParam) => lastPageParam + 1,
+    getPreviousPageParam: (firstPage, pages, firstPageParam) => firstPageParam - 1,
   });
 };
