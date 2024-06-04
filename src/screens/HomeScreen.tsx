@@ -2,17 +2,26 @@ import { Box, HStack, Image, Pressable, Text, useToken, VStack } from '@gluestac
 import { useLingui } from '@lingui/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
+import { QuerySuspense } from '../components/QuerySuspense';
 import { RootStackParamList } from '../routes';
 import { CoinMarket } from '../types/CoinMarket';
 
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen(props: HomeScreenProps) {
+  return (
+    <QuerySuspense>
+      <Content {...props} />
+    </QuerySuspense>
+  );
+}
+
+function Content(props: HomeScreenProps) {
   const { navigation } = props;
 
   const { data, fetchNextPage, isFetchingNextPage } = useCoinsListWithMarketDataQuery();
@@ -157,7 +166,7 @@ function CoinCellItem(props: { item: CoinMarket }) {
 }
 
 export const useCoinsListWithMarketDataQuery = () => {
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ['coins', 'markets'],
     queryFn: async ({ pageParam }) => {
       const response = await getCoinsMarkets({
