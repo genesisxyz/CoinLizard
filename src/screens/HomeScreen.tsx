@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
@@ -13,7 +13,24 @@ import { CoinMarket } from '../types/CoinMarket';
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen(props: HomeScreenProps) {
+  const { navigation } = props;
+
   const { data } = useCoinsListWithMarketDataQuery();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight(props) {
+        return (
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Search');
+            }}>
+            <Text>Search</Text>
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation]);
 
   const renderHeader = useCallback(() => {
     return (
