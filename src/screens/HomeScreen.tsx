@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';
-import { FlatList, FlatListProps } from 'react-native';
+import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
 import { RootStackParamList } from '../routes';
@@ -15,7 +15,7 @@ export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 export default function HomeScreen(props: HomeScreenProps) {
   const { navigation } = props;
 
-  const { data, fetchNextPage } = useCoinsListWithMarketDataQuery();
+  const { data, fetchNextPage, isFetchingNextPage } = useCoinsListWithMarketDataQuery();
 
   useEffect(() => {
     navigation.setOptions({
@@ -62,6 +62,18 @@ export default function HomeScreen(props: HomeScreenProps) {
     return <CoinCellItem item={item} />;
   }, []);
 
+  const renderFooter = useCallback(() => {
+    if (!isFetchingNextPage) {
+      return null;
+    }
+
+    return (
+      <Box padding="$2" justifyContent="center" alignItems="center">
+        <ActivityIndicator />
+      </Box>
+    );
+  }, [isFetchingNextPage]);
+
   const space2 = useToken('space', '2');
 
   const dataFlat = useMemo(() => {
@@ -76,6 +88,7 @@ export default function HomeScreen(props: HomeScreenProps) {
       data={dataFlat}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
+      ListFooterComponent={renderFooter}
       onEndReached={() => {
         fetchNextPage();
       }}
