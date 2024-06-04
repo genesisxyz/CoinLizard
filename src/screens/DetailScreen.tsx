@@ -4,6 +4,7 @@ import {
   Divider,
   HStack,
   Icon,
+  ScrollView,
   Select,
   SelectBackdrop,
   SelectContent,
@@ -84,47 +85,49 @@ export default function DetailScreen(props: DetailScreenProps) {
   });
 
   return (
-    <VStack space="lg" padding="$2">
-      <HStack space="xs" alignItems="baseline">
-        <Text fontSize="$4xl" fontWeight="$bold">
-          {currentPrice}
-        </Text>
-        <Text
-          color={data.market_data.price_change_percentage_24h > 0 ? '$green400' : '$red400'}
-          fontWeight="$bold">
-          {priceChangePercentage24h}%
-        </Text>
-      </HStack>
-      <Chart id={id} />
-      <ChooseCurrencyInput
-        value={currency}
-        onValueChange={(value) => {
-          setCurrency(value as 'usd' | 'eur' | 'gbp');
-        }}
-      />
-      <Box bg="$white" borderRadius="$lg">
-        <MarketDataCell
-          title={_(msg`Market cap rank`)}
-          value={`#${data.market_data.market_cap_rank}`}
+    <ScrollView>
+      <VStack space="lg" padding="$2">
+        <HStack space="xs" alignItems="baseline">
+          <Text fontSize="$4xl" fontWeight="$bold">
+            {currentPrice}
+          </Text>
+          <Text
+            color={data.market_data.price_change_percentage_24h > 0 ? '$green400' : '$red400'}
+            fontWeight="$bold">
+            {priceChangePercentage24h}%
+          </Text>
+        </HStack>
+        <Chart id={id} />
+        <ChooseCurrencyInput
+          value={currency}
+          onValueChange={(value) => {
+            setCurrency(value as 'usd' | 'eur' | 'gbp');
+          }}
         />
-        <Divider my="$0.5" />
-        <MarketDataCell title={_(msg`Market cap`)} value={marketCap} />
-        <Divider my="$0.5" />
-        <MarketDataCell title={_(msg`24-hour trading volume`)} value={tradingVolume} />
-        <Divider my="$0.5" />
-        <MarketDataCell title={_(msg`Circulating supply`)} value={circulatingSupply} />
-        {totalSupply && (
-          <>
-            <Divider my="$0.5" />
-            <MarketDataCell title={_(msg`Total supply`)} value={totalSupply} />
-          </>
-        )}
-        <Divider my="$0.5" />
-        <MarketDataCell title={_(msg`All-time high price`)} value={allTimeHighPrice} />
-        <Divider my="$0.5" />
-        <MarketDataCell title={_(msg`All-time low price`)} value={allTimeLowPrice} />
-      </Box>
-    </VStack>
+        <Box bg="$white" borderRadius="$lg">
+          <MarketDataCell
+            title={_(msg`Market cap rank`)}
+            value={`#${data.market_data.market_cap_rank}`}
+          />
+          <Divider my="$0.5" />
+          <MarketDataCell title={_(msg`Market cap`)} value={marketCap} />
+          <Divider my="$0.5" />
+          <MarketDataCell title={_(msg`24-hour trading volume`)} value={tradingVolume} />
+          <Divider my="$0.5" />
+          <MarketDataCell title={_(msg`Circulating supply`)} value={circulatingSupply} />
+          {totalSupply && (
+            <>
+              <Divider my="$0.5" />
+              <MarketDataCell title={_(msg`Total supply`)} value={totalSupply} />
+            </>
+          )}
+          <Divider my="$0.5" />
+          <MarketDataCell title={_(msg`All-time high price`)} value={allTimeHighPrice} />
+          <Divider my="$0.5" />
+          <MarketDataCell title={_(msg`All-time low price`)} value={allTimeLowPrice} />
+        </Box>
+      </VStack>
+    </ScrollView>
   );
 }
 

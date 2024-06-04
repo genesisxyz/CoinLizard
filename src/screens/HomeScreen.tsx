@@ -1,9 +1,9 @@
-import { Box, HStack, Image, Pressable, Text, VStack } from '@gluestack-ui/themed';
+import { Box, HStack, Image, Pressable, Text, useToken, VStack } from '@gluestack-ui/themed';
 import { useLingui } from '@lingui/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 
 import { getCoinsMarkets } from '../api/coins/getCoinsMarkets';
@@ -13,7 +13,24 @@ import { CoinMarket } from '../types/CoinMarket';
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen(props: HomeScreenProps) {
+  const { navigation } = props;
+
   const { data } = useCoinsListWithMarketDataQuery();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight(props) {
+        return (
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Search');
+            }}>
+            <Text>Search</Text>
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation]);
 
   const renderHeader = useCallback(() => {
     return (
@@ -45,8 +62,11 @@ export default function HomeScreen(props: HomeScreenProps) {
     return <CoinCellItem item={item} />;
   }, []);
 
+  const space2 = useToken('space', '2');
+
   return (
     <FlatList
+      contentContainerStyle={{ padding: space2 }}
       ListHeaderComponent={renderHeader}
       contentInsetAdjustmentBehavior="automatic"
       data={data}
@@ -77,43 +97,41 @@ function CoinCellItem(props: { item: CoinMarket }) {
 
   return (
     <Pressable onPress={onPress}>
-      <Box flexDirection="row" padding="$2">
-        <HStack space="sm" alignItems="center">
-          <Text width="$4.5" fontSize={10}>
-            {item.market_cap_rank}
+      <HStack space="sm" alignItems="center" flexDirection="row" padding="$2">
+        <Text width="$4.5" fontSize={10}>
+          {item.market_cap_rank}
+        </Text>
+        <VStack width="$12" space="xs" alignItems="center">
+          <Image alt="coin image" source={{ uri: item.image }} width={32} height={32} />
+          <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
+            {item.symbol}
           </Text>
-          <VStack width="$12" space="xs" alignItems="center">
-            <Image alt="coin image" source={{ uri: item.image }} width={32} height={32} />
-            <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
-              {item.symbol}
-            </Text>
-          </VStack>
-          <Text width="$20" fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-            {i18n.number(item.current_price, { currency: 'USD', style: 'currency' })}
+        </VStack>
+        <Text width="$20" fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+          {i18n.number(item.current_price, { currency: 'USD', style: 'currency' })}
+        </Text>
+        <VStack width="$12">
+          <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+            {i18n.number(item.price_change_percentage_24h, {
+              maximumFractionDigits: 1,
+              minimumFractionDigits: 1,
+            })}
+            %
           </Text>
-          <VStack width="$12">
+          {priceChangePercentage7Days !== null && (
             <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-              {i18n.number(item.price_change_percentage_24h, {
+              {i18n.number(priceChangePercentage7Days, {
                 maximumFractionDigits: 1,
                 minimumFractionDigits: 1,
               })}
               %
             </Text>
-            {priceChangePercentage7Days !== null && (
-              <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-                {i18n.number(priceChangePercentage7Days, {
-                  maximumFractionDigits: 1,
-                  minimumFractionDigits: 1,
-                })}
-                %
-              </Text>
-            )}
-          </VStack>
-          <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
-            {i18n.number(item.market_cap, { currency: 'USD', style: 'currency' })}
-          </Text>
-        </HStack>
-      </Box>
+          )}
+        </VStack>
+        <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1} flexShrink={1}>
+          {i18n.number(item.market_cap, { currency: 'USD', style: 'currency' })}
+        </Text>
+      </HStack>
     </Pressable>
   );
 }
