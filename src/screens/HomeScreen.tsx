@@ -62,8 +62,11 @@ export default function HomeScreen(props: HomeScreenProps) {
     return <CoinCellItem item={item} />;
   }, []);
 
+  const space2 = useToken('space', '2');
+
   return (
     <FlatList
+      contentContainerStyle={{ padding: space2 }}
       ListHeaderComponent={renderHeader}
       contentInsetAdjustmentBehavior="automatic"
       data={data}
