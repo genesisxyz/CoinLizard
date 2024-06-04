@@ -1,4 +1,4 @@
-import { Box, Pressable, Text } from '@gluestack-ui/themed';
+import { Box, HStack, Image, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -70,9 +70,20 @@ export default function SearchScreen(props: SearchScreenProps) {
             openDetail(item.id);
           }}>
           <Box flexDirection="row" padding={2} borderBottomWidth={1} borderBottomColor="gray.200">
-            <Text>{item.market_cap_rank}</Text>
-            <Text>{item.symbol}</Text>
-            <Text>{item.name}</Text>
+            <HStack space="md" alignItems="center" flexDirection="row" padding="$2">
+              <Text width="$5" fontSize={10}>
+                {item.market_cap_rank}
+              </Text>
+              <VStack width="$16" space="xs" alignItems="center">
+                <Image alt="coin image" source={{ uri: item.large }} width={32} height={32} />
+                <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
+                  {item.symbol}
+                </Text>
+              </VStack>
+              <Text fontWeight="$bold" fontSize="$sm">
+                {item.name}
+              </Text>
+            </HStack>
           </Box>
         </Pressable>
       );
