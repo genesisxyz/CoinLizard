@@ -2,10 +2,12 @@ import { Box, HStack, Image, Pressable, Text, VStack } from '@gluestack-ui/theme
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
+import { FlatList, FlatListProps } from 'react-native';
 import { SearchBarCommands } from 'react-native-screens';
 
 import { getSearch, GetSearchPayload } from '../api/search/getSearch';
+import { Loading } from '../components/Loading';
+import { QuerySuspense } from '../components/QuerySuspense';
 import { useDebounce } from '../hooks/useDebounce';
 import { RootStackParamList } from '../routes';
 import { Search } from '../types/Search';
@@ -13,6 +15,14 @@ import { Search } from '../types/Search';
 export type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export default function SearchScreen(props: SearchScreenProps) {
+  return (
+    <QuerySuspense>
+      <Content {...props} />
+    </QuerySuspense>
+  );
+}
+
+function Content(props: SearchScreenProps) {
   const { navigation } = props;
 
   const [search, setSearch] = useState('');
@@ -95,13 +105,7 @@ export default function SearchScreen(props: SearchScreenProps) {
     <FlatList
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1 }}
-      ListEmptyComponent={
-        isFetching ? (
-          <Box flex={1} alignItems="center" justifyContent="center">
-            <ActivityIndicator />
-          </Box>
-        ) : undefined
-      }
+      ListEmptyComponent={isFetching ? <Loading /> : undefined}
       contentInsetAdjustmentBehavior="automatic"
       data={isFetching ? undefined : data?.coins}
       renderItem={renderItem}
@@ -118,5 +122,6 @@ export const useSearchQuery = (payload: GetSearchPayload, options: { enabled: bo
       return response;
     },
     enabled: options.enabled,
+    throwOnError: true,
   });
 };

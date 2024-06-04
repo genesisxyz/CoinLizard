@@ -21,16 +21,25 @@ import {
 import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 import { getCoin, GetCoinPayload } from '../api/coins/getCoin';
 import Chart from '../components/Chart';
+import { QuerySuspense } from '../components/QuerySuspense';
 import { RootStackParamList } from '../routes';
 
 export type DetailScreenProps = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
 export default function DetailScreen(props: DetailScreenProps) {
+  return (
+    <QuerySuspense>
+      <Content {...props} />
+    </QuerySuspense>
+  );
+}
+
+function Content(props: DetailScreenProps) {
   const { route, navigation } = props;
   const { id } = route.params;
 
@@ -176,7 +185,7 @@ function MarketDataCell(props: { title: string; value: string }) {
 
 function useCoinQuery(payload: GetCoinPayload) {
   const { id, ...params } = payload;
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['coins', id, params],
     queryFn: async () => {
       const response = await getCoin({

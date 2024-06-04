@@ -8,7 +8,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import RootNavigator from './navigators/RootNavigator';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+  },
+});
 
 const DefaultComponent = (props: TransRenderProps) => {
   return <Text>{props.children}</Text>;
