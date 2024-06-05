@@ -88,7 +88,13 @@ function Content(props: DetailScreenProps) {
                   },
                 });
               } else {
-                addCoin({ id: data.id, name: data.name });
+                addCoin({
+                  id: data.id,
+                  name: data.name,
+                  symbol: data.symbol,
+                  image: data.image.large,
+                  marketCapRank: data.market_data.market_cap_rank,
+                });
                 toast.show({
                   placement: 'top',
                   render: ({ id }) => {
@@ -121,7 +127,7 @@ function Content(props: DetailScreenProps) {
         );
       },
     });
-  }, [navigation, data.name, data.id, addCoin, isFavorite, removeCoin, toast, _]);
+  }, [navigation, addCoin, isFavorite, removeCoin, toast, _, data]);
 
   if (!data) {
     return null;

@@ -1,13 +1,4 @@
-import {
-  Box,
-  Divider,
-  HStack,
-  Image,
-  Pressable,
-  Text,
-  useToken,
-  VStack,
-} from '@gluestack-ui/themed';
+import { Divider, useToken } from '@gluestack-ui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -15,6 +6,7 @@ import { FlatList, FlatListProps } from 'react-native';
 import { SearchBarCommands } from 'react-native-screens';
 
 import { getSearch, GetSearchPayload } from '../api/search/getSearch';
+import { CoinListItem } from '../components/CoinListItem';
 import { Loading } from '../components/Loading';
 import { QuerySuspense } from '../components/QuerySuspense';
 import { useDebounce } from '../hooks/useDebounce';
@@ -72,42 +64,23 @@ function Content(props: SearchScreenProps) {
     };
   }, []);
 
-  const openDetail = useCallback(
-    (id: string) => {
-      navigation.navigate('Detail', { id });
-    },
-    [navigation],
-  );
-
   const renderItem = useCallback<NonNullable<FlatListProps<Search['coins'][number]>['renderItem']>>(
     (info) => {
       const { item } = info;
 
+      const { id, name, market_cap_rank, large, symbol } = item;
+
       return (
-        <Pressable
-          onPress={() => {
-            openDetail(item.id);
-          }}>
-          <Box flexDirection="row" padding={2}>
-            <HStack space="md" alignItems="center" flexDirection="row" padding="$2">
-              <Text width="$5" fontSize={10}>
-                {item.market_cap_rank}
-              </Text>
-              <VStack width="$16" space="xs" alignItems="center">
-                <Image alt="coin image" source={{ uri: item.large }} width={32} height={32} />
-                <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
-                  {item.symbol}
-                </Text>
-              </VStack>
-              <Text fontWeight="$bold" fontSize="$sm">
-                {item.name}
-              </Text>
-            </HStack>
-          </Box>
-        </Pressable>
+        <CoinListItem
+          id={id}
+          name={name}
+          marketCapRank={market_cap_rank}
+          image={large}
+          symbol={symbol}
+        />
       );
     },
-    [openDetail],
+    [],
   );
 
   const renderSeparator = useCallback(() => {

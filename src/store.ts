@@ -2,12 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { FavoriteCoin } from './types/FavoriteCoin';
 import { createEnhancedJSONStorage } from './utils/createEnhancedJSONStorage';
 
 type Store = {
-  favoriteCoins: Map<string, { id: string; name: string }>;
-  addCoin: (coin: { id: string; name: string }) => void;
-  removeCoin: (coinId: string) => void;
+  favoriteCoins: Map<string, FavoriteCoin>;
+  addCoin: (coin: FavoriteCoin) => void;
+  removeCoin: (coinId: FavoriteCoin['id']) => void;
 };
 
 export const useStore = create<Store, [['zustand/persist', Store]]>(
