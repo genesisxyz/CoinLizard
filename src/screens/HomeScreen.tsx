@@ -43,21 +43,27 @@ function Content(props: HomeScreenProps) {
 
   const renderHeader = useCallback(() => {
     return (
-      <Box flexDirection="row" padding="$2">
+      <Box flexDirection="row" padding="$2" $lg-padding="$4">
         <HStack space="sm" alignItems="center">
-          <Text fontWeight="$bold" fontSize="$xs" width="$4.5">
+          <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" width="$4.5" $lg-width="$9">
             #
           </Text>
-          <Text fontWeight="$bold" fontSize="$xs" width="$12">
+          <Text
+            fontWeight="$bold"
+            fontSize="$xs"
+            $lg-fontSize="$lg"
+            width="$12"
+            $lg-width="$24"
+            textAlign="center">
             COIN
           </Text>
-          <Text fontWeight="$bold" fontSize="$xs" width="$20">
+          <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" width="$20" $lg-width="$40">
             PRICE
           </Text>
-          <Text fontWeight="$bold" fontSize="$xs" width="$12">
+          <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" width="$12" $lg-width="$24">
             24H/7D
           </Text>
-          <Text fontWeight="$bold" fontSize="$xs">
+          <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg">
             MARKET CAP
           </Text>
         </HStack>
@@ -126,21 +132,39 @@ function CoinCellItem(props: { item: CoinMarket }) {
 
   return (
     <Pressable onPress={onPress}>
-      <HStack space="sm" alignItems="center" flexDirection="row" padding="$2">
-        <Text width="$4.5" fontSize={10}>
+      <HStack space="sm" alignItems="center" flexDirection="row" padding="$2" $lg-padding="$4">
+        <Text width="$4.5" $lg-width="$9" fontSize={10} numberOfLines={1}>
           {item.market_cap_rank}
         </Text>
-        <VStack width="$12" space="xs" alignItems="center">
-          <Image alt="coin image" source={{ uri: item.image }} width={32} height={32} />
-          <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
+        <VStack width="$12" $lg-width="$24" space="xs" alignItems="center">
+          <Image
+            alt="coin image"
+            source={{ uri: item.image }}
+            width={32}
+            $lg-width={64}
+            height={32}
+            $lg-height={64}
+          />
+          <Text
+            fontWeight="$bold"
+            fontSize="$xs"
+            $lg-fontSize="$lg"
+            textTransform="uppercase"
+            numberOfLines={1}>
             {item.symbol}
           </Text>
         </VStack>
-        <Text width="$20" fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+        <Text
+          width="$20"
+          $lg-width="$40"
+          fontWeight="$bold"
+          fontSize="$xs"
+          $lg-fontSize="$lg"
+          numberOfLines={1}>
           {i18n.number(item.current_price, { currency: 'USD', style: 'currency' })}
         </Text>
-        <VStack width="$12">
-          <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+        <VStack width="$12" $lg-width="$24">
+          <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" numberOfLines={1}>
             {i18n.number(item.price_change_percentage_24h, {
               maximumFractionDigits: 1,
               minimumFractionDigits: 1,
@@ -148,7 +172,7 @@ function CoinCellItem(props: { item: CoinMarket }) {
             %
           </Text>
           {priceChangePercentage7Days !== null && (
-            <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1}>
+            <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" numberOfLines={1}>
               {i18n.number(priceChangePercentage7Days, {
                 maximumFractionDigits: 1,
                 minimumFractionDigits: 1,
@@ -157,7 +181,7 @@ function CoinCellItem(props: { item: CoinMarket }) {
             </Text>
           )}
         </VStack>
-        <Text fontWeight="$bold" fontSize="$xs" numberOfLines={1} flexShrink={1}>
+        <Text fontWeight="$bold" fontSize="$xs" $lg-fontSize="$lg" numberOfLines={1} flexShrink={1}>
           {i18n.number(item.market_cap, { currency: 'USD', style: 'currency' })}
         </Text>
       </HStack>

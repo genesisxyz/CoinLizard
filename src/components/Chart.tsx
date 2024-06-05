@@ -2,10 +2,12 @@ import { Text, useToken, VStack } from '@gluestack-ui/themed';
 import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { TextStyle, useWindowDimensions, ViewStyle } from 'react-native';
+import { useMemo } from 'react';
+import { TextStyle, ViewStyle } from 'react-native';
 import { LineChart, lineDataItem } from 'react-native-gifted-charts';
 
 import { getCoinOHLC, GetCoinOHLCPayload } from '../api/coins/getCoinOHLC';
+import { useWindowWidth } from '../hooks/useWindowWidth';
 
 export type ChartProps = {
   id: string;
@@ -24,7 +26,11 @@ export default function Chart(props: ChartProps) {
   const bold = useToken('fontWeights', 'bold');
   const radiusMd = useToken('radii', 'md');
 
-  const windowDimesions = useWindowDimensions();
+  const windowWidth = useWindowWidth();
+
+  const width = useMemo(() => {
+    return windowWidth - space2 * 2;
+  }, [space2, windowWidth]);
 
   const { data } = useCoinOHLCQuery({
     id,
@@ -54,6 +60,7 @@ export default function Chart(props: ChartProps) {
       isAnimated
       hideDataPoints
       focusEnabled
+      adjustToWidth
       formatYLabel={(value) =>
         i18n.number(parseFloat(value), {
           currency: 'USD',
@@ -61,8 +68,7 @@ export default function Chart(props: ChartProps) {
           maximumFractionDigits: 0,
         })
       }
-      adjustToWidth
-      width={windowDimesions.width - space2 * 2}
+      width={width}
       yAxisTextStyle={{ fontWeight: bold, color: secondary400 } as TextStyle}
       yAxisLabelContainerStyle={{ justifyContent: 'flex-start', width: 'auto' } as ViewStyle}
       yAxisColor={'transparent'}
