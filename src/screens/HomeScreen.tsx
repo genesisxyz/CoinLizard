@@ -2,7 +2,7 @@ import { Box, HStack, Image, Pressable, Text, useToken, VStack } from '@gluestac
 import { useLingui } from '@lingui/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useInfiniteQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
 

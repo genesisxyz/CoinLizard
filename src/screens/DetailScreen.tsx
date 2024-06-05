@@ -2,8 +2,10 @@ import {
   Box,
   ChevronDownIcon,
   Divider,
+  FavouriteIcon,
   HStack,
   Icon,
+  Pressable,
   ScrollView,
   Select,
   SelectBackdrop,
@@ -16,6 +18,10 @@ import {
   SelectPortal,
   SelectTrigger,
   Text,
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
   VStack,
 } from '@gluestack-ui/themed';
 import { msg } from '@lingui/macro';
@@ -28,6 +34,7 @@ import { getCoin, GetCoinPayload } from '../api/coins/getCoin';
 import Chart from '../components/Chart';
 import { QuerySuspense } from '../components/QuerySuspense';
 import { RootStackParamList } from '../routes';
+import { useStore } from '../store';
 
 export type DetailScreenProps = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
@@ -49,11 +56,72 @@ function Content(props: DetailScreenProps) {
 
   const { data } = useCoinQuery({ id });
 
+  const isFavorite = useStore((state) => !!state.favoriteCoins.get(id));
+  const addCoin = useStore((state) => state.addCoin);
+  const removeCoin = useStore((state) => state.removeCoin);
+
+  const toast = useToast();
+
   useEffect(() => {
     navigation.setOptions({
-      title: data?.name,
+      title: data.name,
+      headerRight(props) {
+        return (
+          <Pressable
+            onPress={() => {
+              if (isFavorite) {
+                removeCoin(data.id);
+                toast.show({
+                  placement: 'top',
+                  render: ({ id }) => {
+                    const toastId = 'toast-' + id;
+                    return (
+                      <Toast nativeID={toastId} variant="accent" action="error">
+                        <VStack space="xs">
+                          <ToastTitle>{_(msg`Favorite Removed`)}</ToastTitle>
+                          <ToastDescription>
+                            {_(msg`Removed ${data.name} from your favorites.`)}
+                          </ToastDescription>
+                        </VStack>
+                      </Toast>
+                    );
+                  },
+                });
+              } else {
+                addCoin({ id: data.id, name: data.name });
+                toast.show({
+                  placement: 'top',
+                  render: ({ id }) => {
+                    const toastId = 'toast-' + id;
+                    return (
+                      <Toast nativeID={toastId} variant="accent" action="success">
+                        <Pressable
+                          onPress={() => {
+                            navigation.navigate('FavoritesTab');
+                          }}>
+                          <VStack space="xs">
+                            <ToastTitle>{_(msg`Favorite Added`)}</ToastTitle>
+                            <ToastDescription>
+                              {_(msg`Added ${data.name} to your favorites.`)}
+                            </ToastDescription>
+                          </VStack>
+                        </Pressable>
+                      </Toast>
+                    );
+                  },
+                });
+              }
+            }}>
+            <Icon
+              as={FavouriteIcon}
+              fill={isFavorite ? '$primary400' : 'transparent'}
+              color={isFavorite ? '$primary400' : undefined}
+            />
+          </Pressable>
+        );
+      },
     });
-  }, [navigation, data?.name]);
+  }, [navigation, data.name, data.id, addCoin, isFavorite, removeCoin, toast, _]);
 
   if (!data) {
     return null;

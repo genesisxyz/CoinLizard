@@ -1,4 +1,13 @@
-import { Box, HStack, Image, Pressable, Text, VStack } from '@gluestack-ui/themed';
+import {
+  Box,
+  Divider,
+  HStack,
+  Image,
+  Pressable,
+  Text,
+  useToken,
+  VStack,
+} from '@gluestack-ui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -79,7 +88,7 @@ function Content(props: SearchScreenProps) {
           onPress={() => {
             openDetail(item.id);
           }}>
-          <Box flexDirection="row" padding={2} borderBottomWidth={1} borderBottomColor="gray.200">
+          <Box flexDirection="row" padding={2}>
             <HStack space="md" alignItems="center" flexDirection="row" padding="$2">
               <Text width="$5" fontSize={10}>
                 {item.market_cap_rank}
@@ -101,14 +110,20 @@ function Content(props: SearchScreenProps) {
     [openDetail],
   );
 
+  const renderSeparator = useCallback(() => {
+    return <Divider my="$0.5" />;
+  }, []);
+
+  const space2 = useToken('space', '2');
+
   return (
     <FlatList
-      style={{ flex: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flexGrow: 1, padding: space2 }}
       ListEmptyComponent={isFetching ? <Loading /> : undefined}
       contentInsetAdjustmentBehavior="automatic"
       data={isFetching ? undefined : data?.coins}
       renderItem={renderItem}
+      ItemSeparatorComponent={renderSeparator}
       keyExtractor={(item) => item.id}
     />
   );
