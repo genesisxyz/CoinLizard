@@ -22,6 +22,7 @@ import {
   ToastDescription,
   ToastTitle,
   useToast,
+  View,
   VStack,
 } from '@gluestack-ui/themed';
 import { msg } from '@lingui/macro';
@@ -62,6 +63,8 @@ function Content(props: DetailScreenProps) {
 
   const toast = useToast();
 
+  const [isPointerShown, setIsPointerShown] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       title: data.name,
@@ -78,8 +81,8 @@ function Content(props: DetailScreenProps) {
                     return (
                       <Toast nativeID={toastId} variant="accent" action="error">
                         <VStack space="xs">
-                          <ToastTitle>{_(msg`Favorite Removed`)}</ToastTitle>
-                          <ToastDescription>
+                          <ToastTitle $lg-fontSize="$lg">{_(msg`Favorite Removed`)}</ToastTitle>
+                          <ToastDescription $lg-fontSize="$lg">
                             {_(msg`Removed ${data.name} from your favorites.`)}
                           </ToastDescription>
                         </VStack>
@@ -106,8 +109,8 @@ function Content(props: DetailScreenProps) {
                             navigation.navigate('FavoritesTab');
                           }}>
                           <VStack space="xs">
-                            <ToastTitle>{_(msg`Favorite Added`)}</ToastTitle>
-                            <ToastDescription>
+                            <ToastTitle $lg-fontSize="$lg">{_(msg`Favorite Added`)}</ToastTitle>
+                            <ToastDescription $lg-fontSize="$lg">
                               {_(msg`Added ${data.name} to your favorites.`)}
                             </ToastDescription>
                           </VStack>
@@ -168,19 +171,23 @@ function Content(props: DetailScreenProps) {
   });
 
   return (
-    <ScrollView>
+    <ScrollView scrollEnabled={!isPointerShown}>
       <VStack space="lg" padding="$2">
         <HStack space="xs" alignItems="baseline">
-          <Text fontSize="$4xl" fontWeight="$bold">
+          <Text fontSize="$4xl" $lg-fontSize="$8xl" fontWeight="$bold">
             {currentPrice}
           </Text>
           <Text
             color={data.market_data.price_change_percentage_24h > 0 ? '$green400' : '$red400'}
-            fontWeight="$bold">
+            fontWeight="$bold"
+            fontSize="$md"
+            $xl-fontSize="$2xl">
             {priceChangePercentage24h}%
           </Text>
         </HStack>
-        <Chart id={id} />
+        <View>
+          <Chart id={id} setIsPointerShown={setIsPointerShown} />
+        </View>
         <ChooseCurrencyInput
           value={currency}
           onValueChange={(value) => {
@@ -247,10 +254,15 @@ function MarketDataCell(props: { title: string; value: string }) {
 
   return (
     <HStack justifyContent="space-between" padding="$4" space="sm">
-      <Text numberOfLines={1} fontSize="$md" color="$secondary400" flexShrink={1}>
+      <Text
+        numberOfLines={1}
+        fontSize="$md"
+        $xl-fontSize="$xl"
+        color="$secondary400"
+        flexShrink={1}>
         {title}
       </Text>
-      <Text fontSize="$md" fontWeight="$bold">
+      <Text fontSize="$md" $xl-fontSize="$xl" fontWeight="$bold">
         {value}
       </Text>
     </HStack>

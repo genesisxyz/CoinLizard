@@ -51,8 +51,8 @@ function ErrorRetry(props: FallbackProps) {
           return (
             <Toast nativeID={toastId} variant="solid" action="error">
               <VStack space="xs">
-                <ToastTitle>{_(msg`Failed to fetch data`)}</ToastTitle>
-                <ToastDescription>
+                <ToastTitle $lg-fontSize="$lg">{_(msg`Failed to fetch data`)}</ToastTitle>
+                <ToastDescription $lg-fontSize="$lg">
                   {_(msg`Failed to fetch data, please try again later.`)}
                 </ToastDescription>
               </VStack>
@@ -69,7 +69,7 @@ function ErrorRetry(props: FallbackProps) {
         onPress={() => {
           resetErrorBoundary();
         }}>
-        <ButtonText>{_(msg`Retry`)}</ButtonText>
+        <ButtonText $xl-fontSize="$xl">{_(msg`Retry`)}</ButtonText>
       </Button>
     </View>
   );

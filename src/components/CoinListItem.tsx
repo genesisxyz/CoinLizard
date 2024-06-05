@@ -18,18 +18,35 @@ export function CoinListItem(props: CoinListItemProps) {
 
   return (
     <Pressable onPress={onPress}>
-      <Box flexDirection="row" padding={2}>
-        <HStack space="md" alignItems="center" flexDirection="row" padding="$2">
-          <Text width="$5" fontSize={10}>
+      <Box flexDirection="row" padding="$2" $lg-padding="$4">
+        <HStack space="md" alignItems="center" flexDirection="row" padding="$2" flex={1}>
+          <Text $lg-width="$16" width="$8" fontSize="$xs" $lg-fontSize="$lg" numberOfLines={1}>
             {marketCapRank}
           </Text>
-          <VStack width="$16" space="xs" alignItems="center">
-            <Image alt="coin image" source={{ uri: image }} width={32} height={32} />
-            <Text fontWeight="$bold" fontSize="$xs" textTransform="uppercase">
+          <VStack $lg-width="$32" width="$16" space="xs" alignItems="center">
+            <Image
+              alt="coin image"
+              source={{ uri: image }}
+              $lg-width={64}
+              width={32}
+              $lg-height={64}
+              height={32}
+            />
+            <Text
+              fontWeight="$bold"
+              fontSize="$xs"
+              $lg-fontSize="$lg"
+              textTransform="uppercase"
+              numberOfLines={1}>
               {symbol}
             </Text>
           </VStack>
-          <Text fontWeight="$bold" fontSize="$sm">
+          <Text
+            fontWeight="$bold"
+            fontSize="$sm"
+            $lg-fontSize="$lg"
+            numberOfLines={1}
+            flexShrink={1}>
             {name}
           </Text>
         </HStack>
