@@ -22,6 +22,7 @@ import {
   ToastDescription,
   ToastTitle,
   useToast,
+  View,
   VStack,
 } from '@gluestack-ui/themed';
 import { msg } from '@lingui/macro';
@@ -61,6 +62,8 @@ function Content(props: DetailScreenProps) {
   const removeCoin = useStore((state) => state.removeCoin);
 
   const toast = useToast();
+
+  const [isPointerShown, setIsPointerShown] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -168,7 +171,7 @@ function Content(props: DetailScreenProps) {
   });
 
   return (
-    <ScrollView>
+    <ScrollView scrollEnabled={!isPointerShown}>
       <VStack space="lg" padding="$2">
         <HStack space="xs" alignItems="baseline">
           <Text fontSize="$4xl" fontWeight="$bold">
@@ -180,7 +183,9 @@ function Content(props: DetailScreenProps) {
             {priceChangePercentage24h}%
           </Text>
         </HStack>
-        <Chart id={id} />
+        <View>
+          <Chart id={id} setIsPointerShown={setIsPointerShown} />
+        </View>
         <ChooseCurrencyInput
           value={currency}
           onValueChange={(value) => {

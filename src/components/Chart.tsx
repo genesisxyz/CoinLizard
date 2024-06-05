@@ -7,8 +7,14 @@ import { LineChart, lineDataItem } from 'react-native-gifted-charts';
 
 import { getCoinOHLC, GetCoinOHLCPayload } from '../api/coins/getCoinOHLC';
 
-export default function Chart(props: { id: string }) {
-  const { id } = props;
+export type ChartProps = {
+  id: string;
+  // https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts/issues/287#issuecomment-1885884042
+  setIsPointerShown: (isPointerShown: boolean) => void;
+};
+
+export default function Chart(props: ChartProps) {
+  const { id, setIsPointerShown } = props;
 
   const { _, i18n } = useLingui();
 
@@ -118,6 +124,9 @@ export default function Chart(props: { id: string }) {
           );
         },
       }}
+      getPointerProps={({ pointerIndex }: { pointerIndex: number }) =>
+        setIsPointerShown(pointerIndex !== -1)
+      }
     />
   );
 }
