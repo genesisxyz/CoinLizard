@@ -97,6 +97,7 @@ function Content(props: HomeScreenProps) {
 
   return (
     <FlatList
+      testID="coins-list"
       contentContainerStyle={{ padding: space2 }}
       ListHeaderComponent={renderHeader}
       contentInsetAdjustmentBehavior="automatic"
