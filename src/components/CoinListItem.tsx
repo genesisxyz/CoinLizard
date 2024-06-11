@@ -17,7 +17,7 @@ export function CoinListItem(props: CoinListItemProps) {
   };
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable testID={`list-item-${id}`} onPress={onPress}>
       <Box flexDirection="row" padding="$2" $lg-padding="$4">
         <HStack space="md" alignItems="center" flexDirection="row" padding="$2" flex={1}>
           <Text $lg-width="$16" width="$8" fontSize="$xs" $lg-fontSize="$lg" numberOfLines={1}>
@@ -25,6 +25,7 @@ export function CoinListItem(props: CoinListItemProps) {
           </Text>
           <VStack $lg-width="$32" width="$16" space="xs" alignItems="center">
             <Image
+              testID="coin-image"
               alt="coin image"
               source={{ uri: image }}
               $lg-width={64}
