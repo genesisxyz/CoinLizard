@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "intl:extract": "lingui extract",
     "intl:compile": "lingui compile --typescript",
-    "test": "jest",
+    "test": "NODENV=test jest --forceExit --testTimeout=20000 --bail",
     "lint": "eslint .",
     "prepare": "husky",
     "postinstall": "yarn intl:compile"
@@ -50,6 +50,7 @@
     "@testing-library/react-native": "^12.5.1",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.2.45",
+    "@types/react-test-renderer": "^18.3.0",
     "babel-plugin-macros": "^3.1.0",
     "eslint": "^8.57.0",
     "eslint-config-expo": "^7.0.0",
