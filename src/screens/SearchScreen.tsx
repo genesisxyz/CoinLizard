@@ -1,8 +1,14 @@
 import { Divider, useToken } from '@gluestack-ui/themed';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { FlatList, FlatListProps } from 'react-native';
+import {
+  FlatList,
+  FlatListProps,
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
+} from 'react-native';
 import { SearchBarCommands } from 'react-native-screens';
 
 import { getSearch, GetSearchPayload } from '../api/search/getSearch';
@@ -24,9 +30,7 @@ export default function SearchScreen(props: SearchScreenProps) {
 }
 
 function Content(props: SearchScreenProps) {
-  const { navigation } = props;
-
-  const [search, setSearch] = useState('');
+  const search = useSearchBar();
 
   const searchDebounced = useDebounce(search, 300);
 
@@ -34,35 +38,6 @@ function Content(props: SearchScreenProps) {
     { query: searchDebounced },
     { enabled: !!searchDebounced },
   );
-
-  const searchBarRef = useRef<SearchBarCommands>(null);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerSearchBarOptions: {
-        ref: searchBarRef,
-        autoFocus: true,
-        placement: 'stacked',
-        placeholder: 'Search coins',
-        onChangeText(e) {
-          setSearch(e.nativeEvent.text);
-        },
-        onCancelButtonPress(e) {
-          navigation.goBack();
-        },
-      },
-    });
-  }, [navigation]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      searchBarRef.current?.focus();
-    }, 100);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
 
   const renderItem = useCallback<NonNullable<FlatListProps<Search['coins'][number]>['renderItem']>>(
     (info) => {
@@ -101,6 +76,48 @@ function Content(props: SearchScreenProps) {
     />
   );
 }
+
+const useSearchBar = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const [search, setSearch] = useState('');
+
+  const searchBarRef = useRef<SearchBarCommands>(null);
+
+  useEffect(() => {
+    const onChangeText = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      setSearch(e.nativeEvent.text);
+    };
+
+    const onCancelButtonPress = () => {
+      navigation.goBack();
+    };
+
+    navigation.setOptions({
+      headerSearchBarOptions: {
+        ref: searchBarRef,
+        autoFocus: true, // Android only
+        placement: 'stacked',
+        placeholder: 'Search coins',
+        onChangeText,
+        onCancelButtonPress,
+      },
+    });
+  }, [navigation]);
+
+  // Focus the search bar after the screen is mounted
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      searchBarRef.current?.focus();
+    }, 100); // TODO: should wait for react-navigation to finish animating the screen
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  return search;
+};
 
 export const useSearchQuery = (payload: GetSearchPayload, options: { enabled: boolean }) => {
   return useQuery({

@@ -6,7 +6,7 @@ jest.mock('../../../axios');
 const mockedAxios = apiClient as jest.Mocked<typeof apiClient>;
 
 describe('getCoinsMarkets', () => {
-  it('should call the correct endpoint with the given coin id', async () => {
+  it('should call the correct endpoint with the given payload', async () => {
     mockedAxios.get.mockResolvedValueOnce({ data: {} });
 
     await getCoinsMarkets({ vs_currency: 'usd' });

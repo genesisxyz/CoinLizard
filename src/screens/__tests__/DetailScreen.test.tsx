@@ -10,7 +10,6 @@ import * as React from 'react';
 
 import { messages } from '../../locales/en/messages';
 import { RootStackParamList } from '../../routes';
-import { useStore } from '../../store';
 import DetailScreen from '../DetailScreen';
 
 i18n.load({
@@ -111,13 +110,6 @@ describe('DetailScreen', () => {
   });
 
   it('should remove from favorites', async () => {
-    // add one coin to favorites
-    useStore.setState({
-      favoriteCoins: new Map([
-        ['btc', { id: 'btc', name: 'Bitcoin', marketCapRank: 1, image: '', symbol: 'BTC' }],
-      ]),
-    });
-
     const Stack = createNativeStackNavigator<RootStackParamList>();
 
     render(
@@ -135,7 +127,10 @@ describe('DetailScreen', () => {
       },
     );
 
-    // remove the coin from favorites
+    // add coin to favorites
+    fireEvent.press(screen.getByTestId('favorite-button'));
+
+    // remove coin from favorites
     fireEvent.press(screen.getByTestId('favorite-button'));
 
     expect(await screen.findByText('Favorite Removed')).toBeOnTheScreen();
