@@ -6,3 +6,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/screens/DetailScreen.tsx:206
+msgid "24-hour trading volume"
+msgstr "24-hour trading volume"
+
+#: src/screens/DetailScreen.tsx:115
+msgid "Added {0} to your favorites."
+msgstr "Added {0} to your favorites."
+
+#: src/screens/DetailScreen.tsx:216
+msgid "All-time high price"
+msgstr "All-time high price"
+
+#: src/screens/DetailScreen.tsx:218
+msgid "All-time low price"
+msgstr "All-time low price"
+
+#: src/screens/DetailScreen.tsx:208
+msgid "Circulating supply"
+msgstr "Circulating supply"
+
+#: src/components/Chart.tsx:127
+msgid "Close: {0}"
+msgstr "Close: {0}"
+
+#: src/navigators/RootNavigator.tsx:37
+msgid "Detail"
+msgstr "Detail"
+
+#: src/components/QuerySuspense.tsx:54
+msgid "Failed to fetch data"
+msgstr "Failed to fetch data"
+
+#: src/components/QuerySuspense.tsx:56
+msgid "Failed to fetch data, please try again later."
+msgstr "Failed to fetch data, please try again later."
+
+#: src/screens/DetailScreen.tsx:113
+msgid "Favorite Added"
+msgstr "Favorite Added"
+
+#: src/screens/DetailScreen.tsx:85
+msgid "Favorite Removed"
+msgstr "Favorite Removed"
+
+#: src/navigators/FavoritesNavigator.tsx:19
+#: src/navigators/TabNavigator.tsx:29
+msgid "Favorites"
+msgstr "Favorites"
+
+#: src/components/Chart.tsx:121
+msgid "High: {0}"
+msgstr "High: {0}"
+
+#: src/navigators/HomeNavigator.tsx:19
+#: src/navigators/TabNavigator.tsx:21
+msgid "Home"
+msgstr "Home"
+
+#: src/components/Chart.tsx:124
+msgid "Low: {0}"
+msgstr "Low: {0}"
+
+#: src/screens/DetailScreen.tsx:204
+msgid "Market cap"
+msgstr "Market cap"
+
+#: src/screens/DetailScreen.tsx:200
+msgid "Market cap rank"
+msgstr "Market cap rank"
+
+#: src/components/Chart.tsx:118
+msgid "Open: {0}"
+msgstr "Open: {0}"
+
+#: src/screens/DetailScreen.tsx:87
+msgid "Removed {0} from your favorites."
+msgstr "Removed {0} from your favorites."
+
+#: src/components/QuerySuspense.tsx:69
+msgid "Retry"
+msgstr "Retry"
+
+#: src/navigators/RootNavigator.tsx:45
+msgid "Search"
+msgstr "Search"
+
+#: src/screens/DetailScreen.tsx:212
+msgid "Total supply"
+msgstr "Total supply"
