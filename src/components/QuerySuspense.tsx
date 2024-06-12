@@ -65,10 +65,7 @@ function ErrorRetry(props: FallbackProps) {
 
   return (
     <View flex={1} alignItems="center" justifyContent="center">
-      <Button
-        onPress={() => {
-          resetErrorBoundary();
-        }}>
+      <Button onPress={resetErrorBoundary}>
         <ButtonText $xl-fontSize="$xl">{_(msg`Retry`)}</ButtonText>
       </Button>
     </View>

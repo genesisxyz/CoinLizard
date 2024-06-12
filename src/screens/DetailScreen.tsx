@@ -71,6 +71,7 @@ function Content(props: DetailScreenProps) {
       headerRight(props) {
         return (
           <Pressable
+            testID="favorite-button"
             onPress={() => {
               if (isFavorite) {
                 removeCoin(data.id);
@@ -225,7 +226,7 @@ function ChooseCurrencyInput(props: { value: string; onValueChange: (value: stri
   const { value, onValueChange } = props;
 
   return (
-    <Select initialLabel="USD" selectedValue={value} onValueChange={onValueChange}>
+    <Select testID="select" initialLabel="USD" selectedValue={value} onValueChange={onValueChange}>
       <SelectTrigger variant="outline" size="md">
         <SelectInput placeholder="Select option" />
         {/* TODO: this is still a bug https://github.com/gluestack/gluestack-ui/issues/1454 */}
@@ -241,7 +242,7 @@ function ChooseCurrencyInput(props: { value: string; onValueChange: (value: stri
             <SelectDragIndicator />
           </SelectDragIndicatorWrapper>
           <SelectItem label="USD" value="usd" />
-          <SelectItem label="EUR" value="eur" />
+          <SelectItem testID="select-eur" label="EUR" value="eur" />
           <SelectItem label="GBP" value="gbp" />
         </SelectContent>
       </SelectPortal>

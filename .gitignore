@@ -39,3 +39,10 @@ yarn-error.*
 
 # Environment
 .env*.local
+
+# Jest
+coverage
+
+# Native
+android
+ios

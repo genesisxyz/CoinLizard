@@ -1,2 +1,5 @@
 /.expo
 node_modules
+coverage
+android
+ios

@@ -2,7 +2,7 @@ import { PersistStorage, StateStorage, StorageValue } from 'zustand/middleware';
 
 // https://github.com/pmndrs/zustand/pull/1763#issuecomment-1534779266
 
-function replacer(key: string, value: any) {
+export function replacer(key: string, value: any) {
   if (value instanceof Map) {
     return { __type: 'Map', value: Object.fromEntries(value) };
   }
@@ -12,7 +12,7 @@ function replacer(key: string, value: any) {
   return value;
 }
 
-function reviver(key: string, value: any) {
+export function reviver(key: string, value: any) {
   if (value?.__type === 'Map') {
     return new Map(Object.entries(value.value));
   }
