@@ -1,4 +1,4 @@
-<p align="center"><img src="./assets/icon.png" alt="CoinLizard README Splash Image" /></p>
+<p align="center"><img src="./assets/icon.png" alt="CoinLizard README Splash Image" width="250" /></p>
 
 # CoinLizard
 
@@ -29,7 +29,15 @@ This project is a technical challenge to create a React Native application that 
 
 ## Quick Start
 
-Xcode and Android Studio are required to run the app on iOS and Android simulators. The app can also be run by using the [Expo Go app](https://expo.dev/go).
+### Prerequisites
+
+You need to create a `.env.local` file with your [CoinGecko API key](https://docs.coingecko.com/reference/setting-up-your-api-key):
+
+```sh
+EXPO_PUBLIC_COINGECKO_API_KEY=your-api-key
+```
+
+Xcode and Android Studio are required to run the app on iOS and Android simulators, respectively. Alternatively, the app can be run using the [Expo Go app](https://expo.dev/go).
 
 The recommended way to start the project is by installing the tool [asdf](https://asdf-vm.com/guide/getting-started.html) that will make sure the correct versions of Node.js, Yarn, Ruby and Java are used to build and run the app, then you can `yarn install` and `yarn start` to start the development server.
 
@@ -51,12 +59,6 @@ If you want to run the app with [Expo dev client](https://docs.expo.dev/versions
   - Java 17
 
 Follow the React Native [Getting Started](https://reactnative.dev/docs/environment-setup) guide to set up your development environment.
-
-You also need to create a `.env.local` file with your [CoinGecko API key](https://docs.coingecko.com/reference/setting-up-your-api-key):
-
-```sh
-EXPO_PUBLIC_COINGECKO_API_KEY=your-api-key
-```
 
 ## Testing
 
