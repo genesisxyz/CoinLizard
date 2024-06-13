@@ -8,7 +8,6 @@ import {
   FlatListProps,
   Keyboard,
   NativeSyntheticEvent,
-  Platform,
   StyleSheet,
   TextInputFocusEventData,
   TouchableWithoutFeedback,
@@ -28,9 +27,7 @@ export type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Sear
 export default function SearchScreen(props: SearchScreenProps) {
   return (
     <QuerySuspense>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Content {...props} />
         </TouchableWithoutFeedback>
