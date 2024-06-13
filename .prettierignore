@@ -1,0 +1,14 @@
+# Ignore everything except JS-ey code.
+# Based on https://stackoverflow.com/a/70715829/458193
+*
+!**/*.js
+!**/*.jsx
+!**/*.ts
+!**/*.tsx
+!*/
+
+# More specific ignores go below.
+.expo
+android
+ios
+src/locales
