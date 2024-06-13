@@ -1,7 +1,7 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
   extends: ['expo', 'prettier'],
-  plugins: ['prettier', 'simple-import-sort', 'lingui'],
+  plugins: ['prettier', 'simple-import-sort', 'lingui', 'eslint-plugin-react-compiler'],
   rules: {
     'prettier/prettier': 'error',
     'simple-import-sort/imports': 'error',
@@ -9,6 +9,7 @@ module.exports = {
     'import/first': 'error',
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
+    'react-compiler/react-compiler': 'error',
   },
   parserOptions: {
     sourceType: 'module',

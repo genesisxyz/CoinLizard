@@ -2,6 +2,15 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: ['macros'],
+    plugins: [
+      [
+        'babel-plugin-react-compiler',
+        {
+          runtimeModule: 'react-compiler-runtime',
+          // compilationMode: 'annotation',
+        },
+      ], // must run first!
+      'macros',
+    ],
   };
 };
