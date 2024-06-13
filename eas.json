@@ -1,0 +1,14 @@
+{
+  "build": {
+    "dev": {
+      "distribution": "internal",
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "cache": {
+        "key": "eas-dev"
+      }
+    }
+  }
+}
