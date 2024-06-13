@@ -30,7 +30,15 @@ export default (_: ConfigContext): ExpoConfig => ({
   web: {
     favicon: './assets/favicon.png',
   },
-  plugins: ['@config-plugins/detox'],
+  plugins: [
+    [
+      '@config-plugins/detox',
+      {
+        // https://github.com/expo/expo/issues/19585#issuecomment-1281075300
+        subdomains: '*',
+      },
+    ],
+  ],
   extra: {
     eas: {
       projectId: 'da41b593-6838-44cf-a4e3-1c5d5f886903',
