@@ -1,4 +1,4 @@
-import { Divider, useToken } from '@gluestack-ui/themed';
+import { Divider, KeyboardAvoidingView, useToken } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
@@ -6,8 +6,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   FlatListProps,
+  Keyboard,
   NativeSyntheticEvent,
+  Platform,
+  StyleSheet,
   TextInputFocusEventData,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { SearchBarCommands } from 'react-native-screens';
 
@@ -24,7 +28,13 @@ export type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Sear
 export default function SearchScreen(props: SearchScreenProps) {
   return (
     <QuerySuspense>
-      <Content {...props} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Content {...props} />
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </QuerySuspense>
   );
 }
@@ -130,3 +140,9 @@ export const useSearchQuery = (payload: GetSearchPayload, options: { enabled: bo
     throwOnError: true,
   });
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
