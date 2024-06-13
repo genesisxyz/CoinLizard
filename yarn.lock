@@ -3672,17 +3672,38 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanstack/query-core@5.40.0":
-  version "5.40.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.40.0.tgz#c74ae8303752ed4b5a0ab848ec71a0e6e8179f83"
-  integrity sha512-eD8K8jsOIq0Z5u/QbvOmfvKKE/XC39jA7yv4hgpl/1SRiU+J8QCIwgM/mEHuunQsL87dcvnHqSVLmf9pD4CiaA==
-
-"@tanstack/react-query@^5.40.0":
-  version "5.40.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.40.0.tgz#654afa2d9ab328c22be7e1f025ec9b6267c6baa9"
-  integrity sha512-iv/W0Axc4aXhFzkrByToE1JQqayxTPNotCoSCnarR/A1vDIHaoKpg7FTIfP3Ev2mbKn1yrxq0ZKYUdLEJxs6Tg==
+"@tanstack/query-async-storage-persister@^5.45.0":
+  version "5.45.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-async-storage-persister/-/query-async-storage-persister-5.45.0.tgz#0360da1a44c8729ad26aa62ba3e3a3d57b573243"
+  integrity sha512-vy8ZRAp/q7MTkfy9La8T+VJSaVX9ogfgNEKLF42nfldgZWLuHd2Zcxclu9hZNMHapSB5wp4sX2bhYIum8xptUQ==
   dependencies:
-    "@tanstack/query-core" "5.40.0"
+    "@tanstack/query-persist-client-core" "5.45.0"
+
+"@tanstack/query-core@5.45.0":
+  version "5.45.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.45.0.tgz#47a662d311c2588867341238960ec21dc7f0714e"
+  integrity sha512-RVfIZQmFUTdjhSAAblvueimfngYyfN6HlwaJUPK71PKd7yi43Vs1S/rdimmZedPWX/WGppcq/U1HOj7O7FwYxw==
+
+"@tanstack/query-persist-client-core@5.45.0":
+  version "5.45.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.45.0.tgz#395439f8c93053a177dd483f85565a8e7d6896f5"
+  integrity sha512-iAETglkRB6FR1//185TcWGnMxkisJPnCrlvIhLpHzT4eKLmh4n4vq1Cys42YIJzM2il4YWf8P4refzdq4D5Vdw==
+  dependencies:
+    "@tanstack/query-core" "5.45.0"
+
+"@tanstack/react-query-persist-client@^5.45.0":
+  version "5.45.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.45.0.tgz#7405103f804818f88c25e28ad0183eea47593ad5"
+  integrity sha512-nz6jLmVclFYfjB2LhsCcHuo15eDCWs/y9/dPelFJFVwmQE+05HJr9RbqV7BYDJu/3cCyVQv14q/ZyiX/guLtCA==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.45.0"
+
+"@tanstack/react-query@^5.45.0":
+  version "5.45.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.45.0.tgz#6806bb7db1190840c2a7a727cdf192e0d7662a0a"
+  integrity sha512-y272cKRJp1BvehrWG4ashOBuqBj1Qm2O6fgYJ9LYSHrLdsCXl74GbSVjUQTReUdHuRIl9cEOoyPa6HYag400lw==
+  dependencies:
+    "@tanstack/query-core" "5.45.0"
 
 "@testing-library/react-native@^12.5.1":
   version "12.5.1"
