@@ -214,7 +214,6 @@ function useFavoriteButton(data: Coin) {
       marketCapRank: data.market_data.market_cap_rank,
     });
     toast.show({
-      placement: 'top',
       render: ({ id }) => {
         const toastId = 'toast-' + id;
         return (
@@ -235,7 +234,6 @@ function useFavoriteButton(data: Coin) {
   const removeFavorite = useCallback(() => {
     removeCoin(data.id);
     toast.show({
-      placement: 'top',
       render: ({ id }) => {
         const toastId = 'toast-' + id;
         return (
